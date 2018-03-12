@@ -1,13 +1,15 @@
 
 /*:
-
-Bazaar by Yuuta Kirishima (C)opyright 2018
-@plugindesc Online shared shop system
-@author PersiaIndie, Yuuta Kirishima, Dexter
-
-@param Refund Percentage
-@desc the percentage of refund you get for selling an item in the bazaar
-
+*
+* Bazaar by Yuuta Kirishima (C)opyright 2018
+* Modifies Scene_Shop.doBuy() class
+* @plugindesc Online shared shop system
+* @author PersiaIndie, Yuuta Kirishima, Dexter
+* 
+* @param Refund Percentage
+* @desc the percentage of refund you get for selling an item in the bazaar
+* 
+* 
 */
 
 var parameters = PluginManager.parameters("Bazaar");
@@ -27,9 +29,19 @@ Scene_Shop.prototype.doBuy = function(number) {
             bazaar_items_array.extract(this._item.id);
             GameJolt.send_server("bazaar_items", bazaar_items_array.toString());
         } else if(this._item.itypeId == 2){
-
+            Bazaar.on = false;
+            var bazaar_weapons = GameJolt.get_server("bazaar_weapons");
+            console.log("%c Successfully got data from server ", 'background: #222; color: #bada55')
+            var bazaar_weapons_array = JSON.parse("["+bazaar_weapons+"]");
+            bazaar_weapons_array.extract(this._item.id);
+            GameJolt.send_server("bazaar_weapons", bazaar_weapons_array.toString());
         } else if(this._item.itypeId == 3){
-
+            Bazaar.on = false;
+            var bazaar_armors = GameJolt.get_server("bazaar_armors");
+            console.log("%c Successfully got data from server ", 'background: #222; color: #bada55')
+            var bazaar_armors_array = JSON.parse("["+bazaar_armors+"]");
+            bazaar_armors_array.extract(this._item.id);
+            GameJolt.send_server("bazaar_armors", bazaar_armors_array.toString());
         }
     }
     console.log(this._item);
@@ -77,23 +89,50 @@ Bazaar = {
     itemsShop: function(){
         Bazaar.on = true;
        var bazaar_items = GameJolt.get_server("bazaar_items");
-       console.log(bazaar_items);
        var bazaar_items_array = JSON.parse("["+bazaar_items.toString()+"]");
-       console.log("Items in bazaar: "+bazaar_items_array);
        var finalBazaar = [];
        for (var i = 0; i < bazaar_items_array.length; i++)
        {
-           console.log(i)
             finalBazaar[i] = new Array();
             finalBazaar[i].push(0);
             finalBazaar[i].push(bazaar_items_array[i]);
             finalBazaar[i].push(0);
        }
-       console.log("Items in shop: "+finalBazaar);
+       SceneManager.push(Scene_Shop);
+       SceneManager.prepareNextScene(finalBazaar);
+    },
+
+    weaponsShop: function(){
+        Bazaar.on = true;
+       var bazaar_weapons = GameJolt.get_server("bazaar_weapons");
+       var bazaar_weapons_array = JSON.parse("["+bazaar_weapons.toString()+"]");
+       var finalBazaar = [];
+       for (var i = 0; i < bazaar_weapons_array.length; i++)
+       {
+            finalBazaar[i] = new Array();
+            finalBazaar[i].push(0);
+            finalBazaar[i].push(bazaar_weapons_array[i]);
+            finalBazaar[i].push(0);
+       }
+       SceneManager.push(Scene_Shop);
+       SceneManager.prepareNextScene(finalBazaar);
+    },
+
+    armorsShop: function(){
+        Bazaar.on = true;
+       var bazaar_armors = GameJolt.get_server("bazaar_armors");
+       var bazaar_armors_array = JSON.parse("["+bazaar_armors.toString()+"]");
+       var finalBazaar = [];
+       for (var i = 0; i < bazaar_armors_array.length; i++)
+       {
+            finalBazaar[i] = new Array();
+            finalBazaar[i].push(0);
+            finalBazaar[i].push(bazaar_armors_array[i]);
+            finalBazaar[i].push(0);
+       }
        SceneManager.push(Scene_Shop);
        SceneManager.prepareNextScene(finalBazaar);
     }
-
 
 }
 

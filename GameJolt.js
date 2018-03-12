@@ -1,6 +1,6 @@
 /*:
-@plugindesc Use the GameJolt API in your RPG Maker MV game.
-@author Florian van Strien
+@plugindesc Use the GameJolt API in your RPG Maker MV game. MOD By Yuuta Kirishima
+@author Florian van Strien, Yuuta Kirishima/Aj/Dexter
 @param Game ID
 @desc The Game ID of your game. Can be found on the dashboard page of your game, under Game API > API Settings.
 @param Private Key
@@ -21,7 +21,7 @@
 @desc The text that's shown when a player gets a trophy. This is not used if "Show notifications" is off.
 @default You got a trophy!
 @help *GameJolt API plugin for RPG Maker MV*
-By Florian van Strien
+By Florian van Strien Modified by Yuuta Kirishima/Aj/Dexter
 
 This plugin can be used to add the GameJolt API to your RPG Maker MV game.
 This means you can reward your players by giving them trophies, let them
